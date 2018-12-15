@@ -17,6 +17,21 @@ function User(props) {
 }
 
 class App extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			users: []
+		};
+		this.reloadUsers();
+	}
+
+	reloadUsers() {
+		fetch("https://reqres.in/api/users/?per_page=12").then(reply => reply.json()).then(result => {
+			let users = result.data.map(user => Object.assign({id: user.id, avatar: user.avatar, firstName: user.first_name, lastName: user.last_name}));
+			this.setState({users: users});
+		});
+	}
+
 	render() {
 		return(
 			<main class="container">
