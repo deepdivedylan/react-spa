@@ -40,10 +40,23 @@ class App extends React.Component {
 	}
 
 	render() {
+		const cardsPerCol = 3;
+		const users = this.state.users;
+		const numRows = Math.ceil(users.length / cardsPerCol);
+		let rows = [];
+		for(let i = 0; i < numRows; i++) {
+			let usersInRow = [];
+			for(let j = cardsPerCol * i; j < (i + 1) * cardsPerCol; j++) {
+				usersInRow.push(<User key={j} user={users[j]} />);
+			}
+			rows.push(<div className="mb-3 row">{usersInRow}</div>);
+		}
+
+
 		return (
-			<main class="container">
+			<main className="container">
 				<h1>Hi React</h1>
-				{this.state.users.map(user => <User key={user.id} user={user}/>)}
+				{rows}
 			</main>
 		);
 	}
